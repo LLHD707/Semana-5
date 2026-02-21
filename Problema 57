@@ -1,0 +1,39 @@
+#Problema 57:
+mi_lista = [15, 8, 23, 42, 4, 16, 8, 15, 9, 10]
+
+print(f"Lista a buscar:")
+print(f"   {mi_lista}")
+print(f"   • Tamaño: {len(mi_lista)} elementos")
+print(f"   • Índices: 0 a {len(mi_lista)-1}")
+
+
+try:
+    valor_buscar = float(input(f"\n🔎 Ingresa el valor a buscar: "))
+    # Si es entero, lo mostramos como entero
+    if valor_buscar.is_integer():
+        valor_buscar = int(valor_buscar)
+except ValueError:
+    print(" Debes ingresar un número válido")
+    exit()
+
+
+print(f"\n Buscando el valor {valor_buscar}...")
+
+encontrado = False
+posicion = -1
+
+for i in range(len(mi_lista)):
+    if mi_lista[i] == valor_buscar:
+        encontrado = True
+        posicion = i
+        break 
+
+
+print("\n" + "=" * 50)
+if encontrado:
+    print(f" ¡VALOR ENCONTRADO!")
+    print(f"   • El valor {valor_buscar} está en la posición {posicion}")
+    print(f"   • mi_lista[{posicion}] = {mi_lista[posicion]}")
+else:
+    print(f" El valor {valor_buscar} NO está en la lista")
+print("=" * 50)

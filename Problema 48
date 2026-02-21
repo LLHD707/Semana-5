@@ -1,0 +1,61 @@
+## Problema 48: Escribe un programa con 3 listas de n productos y la segunda la clave (codigo de barras) del producto y la tercera la cantidad de piezas en existencia. Le pregunta al usuario por el indice del producto que desea buscar y le muestra toda su información 
+
+print("=== SISTEMA DE INVENTARIO DE PRODUCTOS ===\n")
+
+# 1. PREGUNTAR CUÁNTOS PRODUCTOS SE INGRESARÁN
+n = int(input("¿Cuántos productos deseas registrar? "))
+
+# 2. CREAR LAS 3 LISTAS VACÍAS
+nombres = []      # Lista para nombres de productos
+codigos = []      # Lista para códigos de barras
+cantidades = []   # Lista para cantidades en existencia
+
+# 3. LLENAR LAS LISTAS CON LOS DATOS
+print("\n--- INGRESO DE PRODUCTOS ---")
+for i in range(n):
+    print(f"\nProducto #{i+1}:")
+    
+    nombre = input(f"  Nombre del producto: ")
+    codigo = input(f"  Código de barras: ")
+    cantidad = int(input(f"  Cantidad en existencia: "))
+    
+    # Agregar a las listas
+    nombres.append(nombre)
+    codigos.append(codigo)
+    cantidades.append(cantidad)
+
+# 4. MOSTRAR TODOS LOS PRODUCTOS REGISTRADOS
+print("\n" + "=" * 70)
+print(" PRODUCTOS REGISTRADOS".center(70))
+print("=" * 70)
+print(f"{'ÍNDICE':<10} {'NOMBRE':<25} {'CÓDIGO':<15} {'EXISTENCIA':<15}")
+print("-" * 70)
+
+for i in range(n):
+    print(f"{i:<10} {nombres[i]:<25} {codigos[i]:<15} {cantidades[i]:<15}")
+
+print("=" * 70)
+
+# 5. BÚSQUEDA DE PRODUCTO POR ÍNDICE
+print("\n--- BÚSQUEDA DE PRODUCTO ---")
+while True:
+    try:
+        indice = int(input(f"Ingresa el índice del producto a buscar (0 a {n-1}): "))
+        
+        # Verificar que el índice sea válido
+        if 0 <= indice < n:
+            # Mostrar información del producto encontrado
+            print("\n" + "=" * 50)
+            print(" PRODUCTO ENCONTRADO".center(50))
+            print("=" * 50)
+            print(f" Índice: {indice}")
+            print(f" Nombre: {nombres[indice]}")
+            print(f"  Código de barras: {codigos[indice]}")
+            print(f" Cantidad en existencia: {cantidades[indice]}")
+            print("=" * 50)
+            break
+        else:
+            print(f" Error: El índice debe estar entre 0 y {n-1}")
+            
+    except ValueError:
+        print(" Error: Debes ingresar un número entero válido")

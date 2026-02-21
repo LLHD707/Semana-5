@@ -1,0 +1,78 @@
+# Problema 52: Escribe un programa en el cual se tengan 5 productos, sus precios y respectivas ventas por productos, imprimir un reporte en donde cada renglon contenga el nombre del producto, el precio, el volumen de ventas y el ingreso
+
+print("=" * 70)
+print("📊 SISTEMA DE VENTAS - 5 PRODUCTOS 📊".center(70))
+print("=" * 70 + "\n")
+
+# OPCIÓN 2: EL USUARIO INGRESA LOS DATOS
+
+
+# Crear listas vacías
+productos = []
+precios = []
+ventas = []
+
+print(" INGRESA LOS DATOS DE 5 PRODUCTOS")
+print("-" * 60)
+
+for i in range(5):
+    print(f"\n PRODUCTO #{i+1}")
+    
+    # Nombre del producto
+    nombre = input("  Nombre del producto: ").strip()
+    productos.append(nombre)
+    
+    # Precio (con validación)
+    while True:
+        try:
+            precio = float(input("  Precio unitario: $"))
+            if precio > 0:
+                precios.append(precio)
+                break
+            else:
+                print("   El precio debe ser mayor a 0")
+        except ValueError:
+            print("   Ingresa un número válido")
+    
+    # Ventas (con validación)
+    while True:
+        try:
+            venta = int(input("  Cantidad vendida: "))
+            if venta >= 0:
+                ventas.append(venta)
+                break
+            else:
+                print("   La cantidad no puede ser negativa")
+        except ValueError:
+            print("   Ingresa un número entero válido")
+
+# MOSTRAR REPORTE
+
+print("\n" + "=" * 80)
+print(" REPORTE DE VENTAS".center(80))
+print("=" * 80)
+print(f"{'No.':<5} {'PRODUCTO':<30} {'PRECIO':<15} {'VENTAS':<12} {'INGRESO':<15}")
+print("-" * 80)
+
+ingreso_total = 0
+producto_mas_vendido = 0
+producto_mayor_ingreso = 0
+
+for i in range(5):
+    ingreso = precios[i] * ventas[i]
+    ingreso_total += ingreso
+    
+    # Producto más vendido (por cantidad)
+    if ventas[i] > ventas[producto_mas_vendido]:
+        producto_mas_vendido = i
+    
+    # Producto con mayor ingreso
+    if ingreso > (precios[producto_mayor_ingreso] * ventas[producto_mayor_ingreso]):
+        producto_mayor_ingreso = i
+    
+    print(f"{i+1:<5} {productos[i]:<30} ${precios[i]:<14.2f} {ventas[i]:<12} ${ingreso:>11,.2f}")
+
+print("-" * 80)
+print(f"{'':<40} {'TOTAL GENERAL':<15} ${ingreso_total:>19,.2f}")
+print("=" * 80)
+

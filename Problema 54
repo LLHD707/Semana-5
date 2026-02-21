@@ -1,0 +1,30 @@
+# Problema 54: Escribe un programa con dos listas, una de nombres de ahorradores y otra con sus ahorros. Si el ahorro de una persona es menor $1,000 pesos, indicar:"{Nombre} no tendás para tu futuro" pero si es superior a 1,000,000 indicar "{nombre} ya merito te retiras"
+
+n = int (input("¿Cuántos ahorradores?"))
+
+nombres = []
+ahorros = []
+
+for i in range(n):
+    print(f"\nAhorrador #{i+1}")
+    nombres.append(input("  Nombre: "))
+    ahorros.append(float(input("  Ahorro: $")))
+
+print("\n" + "=" * 60)
+print(" RESULTADOS".center(60))
+print("=" * 60)
+
+for i in range(n):
+    nombre = nombres[i]
+    ahorro = ahorros[i]
+    
+    if ahorro < 1000:
+        print(f"\n {nombre} no tendrás para tu futuro")
+    elif ahorro > 1000000:
+        print(f"\n {nombre} YA MERITO TE RETIRAS")
+    else:
+        print(f"\nℹ  {nombre} sigue ahorrando")
+    
+    print(f"   Ahorro: ${ahorro:,.2f}")
+
+print("\n" + "=" * 60)

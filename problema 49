@@ -1,0 +1,83 @@
+## Problema 49: Del programa anterior agrega la opción de mostrar todos los elementos almacenados en un diccionario
+
+print("=== SISTEMA DE INVENTARIO CON DICCIONARIO ===\n")
+
+# 1. PREGUNTAR CUÁNTOS PRODUCTOS SE INGRESARÁN
+n = int(input("¿Cuántos productos deseas registrar? "))
+
+# 2. CREAR UN DICCIONARIO VACÍO
+# Estructura: {índice: [nombre, código, cantidad]}
+inventario = {}
+
+# 3. LLENAR EL DICCIONARIO CON LOS DATOS
+print("\n--- INGRESO DE PRODUCTOS ---")
+for i in range(n):
+    print(f"\nProducto #{i+1}:")
+    
+    nombre = input(f"  Nombre del producto: ")
+    codigo = input(f"  Código de barras: ")
+    cantidad = int(input(f"  Cantidad en existencia: "))
+    
+    # Guardar en el diccionario usando el índice como clave
+    inventario[i] = [nombre, codigo, cantidad]
+
+# 4. MOSTRAR TODOS LOS ELEMENTOS DEL DICCIONARIO
+print("\n" + "=" * 80)
+print(" INVENTARIO COMPLETO (DICCIONARIO)".center(80))
+print("=" * 80)
+
+# Opción 1: Mostrar el diccionario completo
+print("\n DICCIONARIO COMPLETO:")
+print(inventario)
+print("\n" + "-" * 80)
+
+# Opción 2: Mostrar en formato tabla (más legible)
+print(" TABLA DE PRODUCTOS:")
+print(f"{'ÍNDICE':<10} {'NOMBRE':<25} {'CÓDIGO':<20} {'EXISTENCIA':<15}")
+print("-" * 80)
+
+# Recorrer el diccionario con items()
+for clave, valor in inventario.items():
+    nombre, codigo, cantidad = valor  # Desempaquetar la lista
+    print(f"{clave:<10} {nombre:<25} {codigo:<20} {cantidad:<15}")
+
+print("=" * 80)
+
+# Opción 3: Mostrar cada elemento con su estructura
+print("\n DETALLE POR PRODUCTO:")
+for clave, valor in inventario.items():
+    print(f"\n  Producto con índice {clave}:")
+    print(f"    → Nombre: {valor[0]}")
+    print(f"    → Código: {valor[1]}")
+    print(f"    → Cantidad: {valor[2]}")
+
+# 5. BÚSQUEDA DE PRODUCTO POR ÍNDICE
+print("\n" + "=" * 80)
+print(" BÚSQUEDA DE PRODUCTO".center(80))
+print("=" * 80)
+
+while True:
+    try:
+        indice = int(input(f"\nIngresa el índice del producto a buscar (0 a {n-1}): "))
+        
+        # Verificar si el índice existe en el diccionario
+        if indice in inventario:
+            producto = inventario[indice]
+            print("\n" + "─" * 50)
+            print(" PRODUCTO ENCONTRADO".center(50))
+            print("─" * 50)
+            print(f" Índice: {indice}")
+            print(f" Nombre: {producto[0]}")
+            print(f"  Código de barras: {producto[1]}")
+            print(f" Cantidad en existencia: {producto[2]}")
+            print("─" * 50)
+            break
+        else:
+            print(f" Error: El índice {indice} no existe en el inventario")
+            print(f"   Índices disponibles: {list(inventario.keys())}")
+            
+    except ValueError:
+        print(" Error: Debes ingresar un número entero válido")
+    except KeyboardInterrupt:
+        print("\n\n Programa terminado")
+        break

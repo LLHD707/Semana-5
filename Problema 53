@@ -1,0 +1,63 @@
+#Problema 53: Escribe un programa que reciba n datos hasta que el usuario indique que no y los almacena en una lista e imprima la lista
+
+datos = []
+continuar = input("¿Deseas ingresar datos? (si/no): ").strip().lower()
+
+while continuar in ["si", "sí", "s", "yes", "y"]:
+    entrada = input(f"\n  Ingresa un dato: ")
+    
+    # Intentar convertir a número
+    try:
+        # Si se puede convertir a float, guardamos como número
+        valor = float(entrada)
+        # Si es entero (sin decimales), lo guardamos como int
+        if valor.is_integer():
+            datos.append(int(valor))
+        else:
+            datos.append(valor)
+        print(f"  ✓ Dato numérico agregado: {datos[-1]}")
+    except ValueError:
+        # Si no se puede convertir, guardamos como texto
+        datos.append(entrada)
+        print(f"  ✓ Dato de texto agregado: '{datos[-1]}'")
+    
+    print(f"   Lista actual: {datos}")
+    continuar = input("\n  ¿Otro dato? (si/no): ").strip().lower()
+
+print("\n" + "=" * 60)
+print(" RESULTADOS".center(60))
+print("=" * 60)
+
+if len(datos) > 0:
+    print(f"\n Lista original:")
+    print(f"   {datos}")
+    print(f"   • Tipo de datos: {[type(x).__name__ for x in datos]}")
+    
+    # Ordenar (funciona con números y textos mezclados? ¡CUIDADO!)
+    try:
+        datos_ordenados = sorted(datos)
+        print(f"\n Lista ordenada:")
+        print(f"   {datos_ordenados}")
+        
+        # Mostrar detalle
+        print(f"\n Detalle ordenado:")
+        for i, elemento in enumerate(datos_ordenados):
+            tipo = "número" if isinstance(elemento, (int, float)) else "texto"
+            print(f"   {i}: {elemento} ({tipo})")
+            
+    except TypeError:
+        print(f"\n  No se puede ordenar: tipos de datos mezclados")
+        print(f"   (no se pueden comparar números con texto)")
+        
+        # Separar por tipos
+        numeros = [x for x in datos if isinstance(x, (int, float))]
+        textos = [x for x in datos if isinstance(x, str)]
+        
+        if numeros:
+            print(f"\n    Números: {sorted(numeros)}")
+        if textos:
+            print(f"    Textos: {sorted(textos)}")
+else:
+    print(f"\n  No se ingresaron datos.")
+
+print("\n" + "=" * 60)

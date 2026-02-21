@@ -1,0 +1,20 @@
+## Problema 46: Crear un programa que reciba 10 datos y los muestre elecados al cuadrado
+
+print("=== GUARDAR 10 NÚMEROS Y MOSTRAR SUS CUADRADOS ===\n")
+
+# Crear una lista vacía para guardar los números
+numeros = []
+
+# Pedir 10 números al usuario y guardarlos en la lista
+for i in range(10):
+    num = float(input(f"Ingresa el número {i+1}: "))
+    numeros.append(num)  # Agregar el número a la lista
+
+# Mostrar los números y sus cuadrados
+print("\n" + "=" * 50)
+print("RESULTADOS:")
+print("=" * 50)
+
+for i in range(10):
+    cuadrado = numeros[i] ** 2
+    print(f"Número {i+1}: {numeros[i]} → Cuadrado: {cuadrado}")

@@ -1,0 +1,39 @@
+## Problema 51: Crear un programa que registre en una lista el nombre de n trabajadores, en otra 0 si no asistió  trabajar y 1 si asistió. Mostrar en pantalla el texto ´{Nombre} {asistió}/no asistió a trabajar}´
+
+n = int(input("¿Cuántos trabajadores deseas registrar? "))
+
+nombres = []
+asistencias = []
+
+for i in range(n):
+    print(f"\n---- Trabajador {i + 1} ----")
+
+    nombre = input("Nombre del trabajador:")
+    nombres.append(nombre)
+
+    while True:
+        try:
+            asistio = int(input("Asistió ( 1 = Sí, 0 = No):"))
+            if asistio == 0 or asistio == 1:
+                asistencias.append(asistio)
+                break
+            else:
+                print("Solo 0 o 1")
+        except ValueError:
+            print("Ingresa 0 o 1")    
+
+            print("\n" + "=" * 50)
+
+print(" REPORTE DE ASISTENCIA")
+print("=" * 50)
+
+for i in range(n):
+    nombre = nombres[i]      # Obtener nombre en posición i
+    asistio = asistencias[i] # Obtener asistencia en posición i
+    
+    if asistio == 1:
+        estado = "SÍ asistió"
+    else:
+        estado = "NO asistió"
+    
+    print(f"{nombre} {estado} a trabajar")

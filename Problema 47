@@ -1,0 +1,33 @@
+## Programa 47: Crear un programa que reciba n calificaciones. Muestra en pantalla el nombre de la materia y su calificación promedio
+
+print("=== CALIFICACIONES Y SUS MATERIAS ===\n")
+
+# Preguntar cuántas materias serán
+n = int(input("¿Cuántas materias deseas ingresar? "))
+
+# Crear listas vacías
+materias = []
+calificaciones = []
+
+# Pedir datos
+for i in range(n):
+    print(f"\n--- Materia {i+1} ---")
+    materia = input(f"Nombre de la materia {i+1}: ")
+    calif = float(input(f"Calificación de {materia}: "))
+    
+    materias.append(materia)
+    calificaciones.append(calif)
+
+# Mostrar resultados
+print("\n" + "=" * 50)
+print("RESULTADOS:")
+print("=" * 50)
+
+for i in range(n):
+    print(f"Materia: {materias[i]} → Calificación: {calificaciones[i]}")
+
+# Calcular y mostrar el promedio
+promedio = sum(calificaciones) / n
+print("=" * 50)
+print(f"PROMEDIO GENERAL: {promedio:.2f}")
+print("=" * 50)

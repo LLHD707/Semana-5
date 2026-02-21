@@ -1,0 +1,247 @@
+# Problema 55
+
+
+print("¿Qué tipo de lista deseas crear?")
+print("1. Lista de NÚMEROS (enteros/ decimales)")
+print("2. Lista de TEXTO (palabras/frases)")
+
+while True:
+    tipo = input("\n Selecciona una opción (1/2): ").strip()
+    if tipo in ["1", "2"]:
+        break
+    else:
+        print(" Opción no válida. Debe ser 1 o 2")
+
+# Crear lista vacía según el tipo
+mi_lista = []
+print(f"\n Lista de {'NÚMEROS' if tipo == '1' else 'TEXTO'} creada exitosamente!")
+
+
+def mostrar_lista():
+    """Muestra la lista actual con formato"""
+    if len(mi_lista) == 0:
+        print("    La lista está vacía")
+    else:
+        print(f"\n    LISTA ACTUAL ({len(mi_lista)} elementos):")
+        for i, elemento in enumerate(mi_lista):
+            print(f"      [{i}] → {elemento}")
+
+def validar_numero(valor):
+    """Intenta convertir a número, devuelve (éxito, valor_convertido)"""
+    try:
+        # Intentar convertir a float primero
+        num = float(valor)
+        # Si es entero (sin decimales), convertir a int
+        if num.is_integer():
+            return True, int(num)
+        return True, num
+    except ValueError:
+        return False, None
+
+def validar_tipo_dato(valor):
+    """Valida que el dato sea del tipo correcto según la lista"""
+    if tipo == "1":  # Lista numérica
+        es_valido, num = validar_numero(valor)
+        if es_valido:
+            return True, num
+        else:
+            print(" Error: En lista numérica solo se aceptan números")
+            return False, None
+    else:  # Lista de texto
+        return True, valor  # Todo texto es válido
+
+while True:
+    print("\n" + "=" * 80)
+    print(" MENÚ DE OPERACIONES".center(80))
+    print("=" * 80)
+    print("1. Agregar valores a la lista")
+    print("2. Eliminar valores")
+    print("3. Ordenar la lista (modificando la original)")
+    print("4. Ordenar la lista (generando nueva lista ordenada)")
+    print("5. Verificar si un elemento existe y mostrar índices")
+    if tipo == "1":
+        print("6. Calcular estadísticas (máx, mín, suma, promedio)")
+    print("7. Mostrar lista actual")
+    print("8. SALIR")
+    print("-" * 80)
+    
+    opcion = input(" Selecciona una opción: ").strip()
+    
+    if opcion == "1":
+        print("\n--- AGREGAR VALORES ---")
+        while True:
+            valor = input("  Ingresa un valor (o 'fin' para terminar): ").strip()
+            
+            if valor.lower() == 'fin':
+                break
+            
+            es_valido, valor_procesado = validar_tipo_dato(valor)
+            if es_valido:
+                mi_lista.append(valor_procesado)
+                print(f"  ✓ '{valor_procesado}' agregado")
+                mostrar_lista()
+            else:
+                print("  ✗ No se agregó")
+    
+    elif opcion == "2":
+        if len(mi_lista) == 0:
+            print("\n  La lista está vacía, no hay nada que eliminar")
+            continue
+            
+        print("\n--- ELIMINAR VALORES ---")
+        print("a. Eliminar por ÍNDICE")
+        print("b. Eliminar por VALOR (primera aparición)")
+        print("c. Eliminar todas las ocurrencias de un valor")
+        
+        subopcion = input("Elige (a/b/c): ").strip().lower()
+        
+        if subopcion == "a":  # Eliminar por índice
+            mostrar_lista()
+            try:
+                idx = int(input(f"\n  Índice a eliminar (0-{len(mi_lista)-1}): "))
+                if 0 <= idx < len(mi_lista):
+                    eliminado = mi_lista.pop(idx)
+                    print(f"  ✓ Elemento '{eliminado}' eliminado")
+                else:
+                    print(f"   Índice fuera de rango")
+            except ValueError:
+                print("   Ingresa un número válido")
+        
+        elif subopcion == "b":  # Eliminar por valor (primera aparición)
+            valor = input("  Valor a eliminar: ").strip()
+            es_valido, valor_procesado = validar_tipo_dato(valor)
+            
+            if es_valido:
+                if valor_procesado in mi_lista:
+                    mi_lista.remove(valor_procesado)
+                    print(f"  ✓ Primera ocurrencia de '{valor_procesado}' eliminada")
+                else:
+                    print(f"   '{valor_procesado}' no está en la lista")
+            else:
+                print("   Tipo de dato incorrecto")
+        
+        elif subopcion == "c":  # Eliminar todas las ocurrencias
+            valor = input("  Valor a eliminar (todas las ocurrencias): ").strip()
+            es_valido, valor_procesado = validar_tipo_dato(valor)
+            
+            if es_valido:
+                antes = len(mi_lista)
+                mi_lista = [x for x in mi_lista if x != valor_procesado]
+                despues = len(mi_lista)
+                eliminados = antes - despues
+                if eliminados > 0:
+                    print(f"  ✓ {eliminados} ocurrencia(s) de '{valor_procesado}' eliminada(s)")
+                else:
+                    print(f"   '{valor_procesado}' no está en la lista")
+            else:
+                print("   Tipo de dato incorrecto")
+        
+        mostrar_lista()
+    
+    
+    elif opcion == "3":
+        if len(mi_lista) == 0:
+            print("\n  La lista está vacía")
+            continue
+            
+        print("\n--- ORDENAR LISTA (modificando original) ---")
+        print("a. Orden ascendente (menor a mayor)")
+        print("b. Orden descendente (mayor a menor)")
+        
+        subopcion = input(" Elige (a/b): ").strip().lower()
+        
+        try:
+            if subopcion == "a":
+                mi_lista.sort()
+                print("  ✓ Lista ordenada ASCENDENTEMENTE")
+            elif subopcion == "b":
+                mi_lista.sort(reverse=True)
+                print("  ✓ Lista ordenada DESCENDENTEMENTE")
+            else:
+                print("   Opción no válida")
+        except TypeError:
+            print("   No se puede ordenar: tipos de datos mezclados")
+        
+        mostrar_lista()
+    
+    
+    elif opcion == "4":
+        if len(mi_lista) == 0:
+            print("\n  La lista está vacía")
+            continue
+            
+        print("\n--- ORDENAR LISTA (generando nueva lista) ---")
+        print("a. Orden ascendente (menor a mayor)")
+        print("b. Orden descendente (mayor a menor)")
+        
+        subopcion = input(" Elige (a/b): ").strip().lower()
+        
+        try:
+            if subopcion == "a":
+                nueva_lista = sorted(mi_lista)
+                print("  ✓ Nueva lista ORDENADA (ascendente):")
+            elif subopcion == "b":
+                nueva_lista = sorted(mi_lista, reverse=True)
+                print("  ✓ Nueva lista ORDENADA (descendente):")
+            else:
+                print("   Opción no válida")
+                continue
+            
+            print(f"\n   Lista original: {mi_lista}")
+            print(f"   Lista ordenada: {nueva_lista}")
+            
+        except TypeError:
+            print("   No se puede ordenar: tipos de datos mezclados")
+    
+   
+    elif opcion == "5":
+        if len(mi_lista) == 0:
+            print("\n  La lista está vacía")
+            continue
+            
+        print("\n--- VERIFICAR ELEMENTO ---")
+        valor = input("  Elemento a buscar: ").strip()
+        es_valido, valor_procesado = validar_tipo_dato(valor)
+        
+        if es_valido:
+            # Encontrar todos los índices donde aparece
+            indices = []
+            for i, elem in enumerate(mi_lista):
+                if elem == valor_procesado:
+                    indices.append(i)
+            
+            if indices:
+                print(f"  ✓ '{valor_procesado}' ENCONTRADO")
+                if len(indices) == 1:
+                    print(f"     • Aparece 1 vez en el índice {indices[0]}")
+                else:
+                    print(f"     • Aparece {len(indices)} veces en los índices: {indices}")
+            else:
+                print(f"   '{valor_procesado}' NO está en la lista")
+        else:
+            print("   Tipo de dato incorrecto")
+    
+    
+    elif opcion == "6" and tipo == "1":
+        if len(mi_lista) == 0:
+            print("\n  La lista está vacía")
+            continue
+            
+        print("\n--- ESTADÍSTICAS DE LA LISTA ---")
+        print(f"   Lista: {mi_lista}")
+        print(f"   • Total de elementos: {len(mi_lista)}")
+        print(f"   • Valor MÁXIMO: {max(mi_lista)}")
+        print(f"   • Valor MÍNIMO: {min(mi_lista)}")
+        print(f"   • SUMA total: {sum(mi_lista)}")
+        print(f"   • PROMEDIO: {sum(mi_lista)/len(mi_lista):.2f}")
+ 
+    elif opcion == "7":
+        mostrar_lista()
+    
+   
+    elif opcion == "8":
+        print("\n ¡Gracias por usar el sistema de gestión de listas!")
+        break
+    
+    else:
+        print(" Opción no válida")

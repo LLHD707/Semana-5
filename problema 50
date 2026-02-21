@@ -1,0 +1,136 @@
+## Problema 50: Agregar al programa busqueda por indice y también por nombre de producto o por la clave
+
+print("=" * 70)
+print(" SISTEMA DE INVENTARIO - BÚSQUEDA MÚLTIPLE 🎯".center(70))
+print("=" * 70 + "\n")
+
+n = int(input("¿Cuántos productos deseas registrar? "))
+
+inventario = {}
+
+print("\n--- INGRESO DE PRODUCTOS ---")
+for i in range(n):
+    print(f"\n Producto #{i+1}:")
+    
+    nombre = input("  Nombre del producto: ").strip()
+    codigo = input("  Código de barras: ").strip()  # CORREGIDO: agregar ()
+    cantidad = int(input("  Cantidad en existencia: "))
+    precio = float(input("  Precio unitario: $"))
+    
+    inventario[i] = {
+        "nombre": nombre,
+        "codigo": codigo,
+        "cantidad": cantidad,
+        "precio": precio
+    }
+
+print("\n" + "=" * 80)
+print(" INVENTARIO COMPLETO".center(80))
+print("=" * 80)
+# CORREGIDO: comillas simples dentro de f-string
+print(f"{'Índice':<8} {'Nombre':<25} {'Código':<15} {'Cantidad':<10} {'Precio':<10}")
+print("-" * 80)
+
+for idx, prod in inventario.items():
+    print(f"{idx:<8} {prod['nombre']:<25} {prod['codigo']:<15} "
+          f"{prod['cantidad']:<10} ${prod['precio']:<9.2f}")
+
+#  MENÚ PRINCIPAL 
+while True:
+    print("\n" + "=" * 70)
+    print(" MENÚ DE BÚSQUEDA".center(70))
+    print("=" * 70)
+    print("1. Buscar por ÍNDICE")
+    print("2. Buscar por NOMBRE del producto")
+    print("3. Buscar por CÓDIGO de barras")
+    print("4. Mostrar TODOS los productos")
+    print("5. SALIR")
+    print("-" * 70)
+    
+    opcion = input("👉 Selecciona una opción (1-5): ").strip()
+    
+    #  OPCIÓN 1: BÚSQUEDA POR ÍNDICE 
+    if opcion == "1":
+        print("\n--- BÚSQUEDA POR ÍNDICE ---")
+        try:
+            idx = int(input(f"Ingresa el índice (0 a {n-1}): "))
+            
+            if idx in inventario:
+                prod = inventario[idx]
+                print("\n" + "─" * 50)
+                print(" PRODUCTO ENCONTRADO".center(50))
+                print("─" * 50)
+                print(f" Índice: {idx}")
+                # CORREGIDO: usar comillas en las claves
+                print(f" Nombre: {prod['nombre']}")
+                print(f"  Código: {prod['codigo']}")
+                print(f" Cantidad: {prod['cantidad']}")
+                print(f" Precio: ${prod['precio']:.2f}")
+                print(f" Valor total: ${prod['cantidad'] * prod['precio']:.2f}")
+            else:
+                print(f" No existe producto con índice {idx}")
+        except ValueError:
+            print(" Ingresa un número válido")
+    
+    # === OPCIÓN 2: BÚSQUEDA POR NOMBRE ===
+    elif opcion == "2":
+        print("\n--- BÚSQUEDA POR NOMBRE ---")
+        nombre_buscar = input("Ingresa el nombre del producto: ").strip().lower()
+        
+        encontrados = []
+        for idx, prod in inventario.items():
+            if nombre_buscar in prod['nombre'].lower():
+                encontrados.append((idx, prod))
+        
+        if encontrados:
+            print(f"\n Se encontraron {len(encontrados)} producto(s):")
+            print("─" * 70)
+            # CORREGIDO: comillas simples
+            print(f"{'Índice':<8} {'Nombre':<25} {'Código':<15} {'Cantidad':<10} {'Precio':<10}")
+            print("-" * 70)
+            for idx, prod in encontrados:
+                print(f"{idx:<8} {prod['nombre']:<25} {prod['codigo']:<15} "
+                      f"{prod['cantidad']:<10} ${prod['precio']:<9.2f}")
+        else:
+            print(f" No se encontraron productos con '{nombre_buscar}'")  # CORREGIDO
+    
+    # === OPCIÓN 3: BÚSQUEDA POR CÓDIGO ===
+    elif opcion == "3":
+        print("\n--- BÚSQUEDA POR CÓDIGO DE BARRAS ---")
+        codigo_buscar = input("Ingresa el código de barras: ").strip()
+        
+        encontrado = False
+        for idx, prod in inventario.items():
+            if prod['codigo'] == codigo_buscar:
+                print("\n" + "─" * 50)
+                print(" PRODUCTO ENCONTRADO".center(50))
+                print("─" * 50)
+                print(f" Índice: {idx}")
+                print(f" Nombre: {prod['nombre']}")
+                print(f"  Código: {prod['codigo']}")
+                print(f" Cantidad: {prod['cantidad']}")
+                print(f" Precio: ${prod['precio']:.2f}")
+                encontrado = True
+                break
+        
+        if not encontrado:
+            print(f" No existe producto con código '{codigo_buscar}'")
+    
+    # === OPCIÓN 4: MOSTRAR TODOS ===
+    elif opcion == "4":
+        print("\n" + "=" * 80)
+        print(" INVENTARIO COMPLETO".center(80))
+        print("=" * 80)
+        print(f"{'Índice':<8} {'Nombre':<25} {'Código':<15} {'Cantidad':<10} {'Precio':<10}")
+        print("-" * 80)
+        for idx, prod in inventario.items():
+            print(f"{idx:<8} {prod['nombre']:<25} {prod['codigo']:<15} "
+                  f"{prod['cantidad']:<10} ${prod['precio']:<9.2f}")
+    
+    # === OPCIÓN 5: SALIR ===
+    elif opcion == "5":
+        print("\n ¡Gracias por usar el sistema de inventario!")
+        break
+    
+    else:
+        print(" Opción no válida. Intenta de nuevo (1-5)")

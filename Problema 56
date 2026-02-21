@@ -1,0 +1,23 @@
+# Problema 56: Apartir de una lista de números agregar 10 más en orden consecutivo consideando el ultimo valor
+
+lista_numeros = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
+
+print(f" Lista original: {lista_numeros}")
+print(f" Tamaño: {len(lista_numeros)} elementos")
+
+
+ultimo = lista_numeros[-1] 
+print(f"🔍 Último valor: {ultimo}")
+
+
+print(f"\n➕ Agregando 10 números consecutivos después de {ultimo}...")
+
+for i in range(1, 11):  
+    nuevo_numero = ultimo + i
+    lista_numeros.append(nuevo_numero)
+    print(f"   Agregado: {nuevo_numero}")
+
+print(f"\n Lista final: {lista_numeros}")
+print(f" Nuevo tamaño: {len(lista_numeros)} elementos")
+print(f" Primer elemento: {lista_numeros[0]}")
+print(f" Último elemento: {lista_numeros[-1]}")
